@@ -7,6 +7,11 @@ services:
     volumes:
       - ./src:/var/www/html
       - ./php-conf.d/php.ini:/usr/local/etc/php/conf.d/custom-php.ini:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval:  10s
+      timeout:  5s
+      retries:  3
     ports:
       - "80:80"
 

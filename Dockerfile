@@ -9,10 +9,6 @@ RUN apt-get update && \
 # Copy your source code and migration script
 COPY . /var/www/html
 
-# Run the migration script
-RUN php src/db/migration.php
 
 # Expose port  80 for the web server
 EXPOSE  80
-
-
