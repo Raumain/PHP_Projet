@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  php:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+      - ./php-conf.d/php.ini:/usr/local/etc/php/conf.d/custom-php.ini:ro
+    ports:
+      - "80:80"
+
+  mysql:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./mysql-conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
+      - mysql-data:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: mariadb_password
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql-data:

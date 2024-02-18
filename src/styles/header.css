@@ -1,0 +1,50 @@
+header {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header > div {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+header > div > a {
+  position: relative;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  transition: all ease-in-out 0.1s;
+}
+
+header > div > a > i {
+  font-size: 1.4rem;
+}
+
+header > div > a > small {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: red;
+  border-radius: 50%;
+  padding: 0.1rem 0.3rem;
+  color: white;
+}
+
+header > div > a.shopping-cart:hover {
+  color: #3e3e3e;
+  transform: scale(1.1);
+  transition: all ease-in-out 0.1s;
+}
+
+header > div > a:not(.shopping-cart):hover {
+  text-decoration: underline;
+  transition: all ease-in-out 0.1s;
+}
