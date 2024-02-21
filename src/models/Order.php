@@ -54,4 +54,22 @@ class Order{
         unset($_SESSION["cart"]);
         return $order_id;
     }
+
+
+    public function getOrdersAndProductsByUser($user_id)
+    {
+        global $db_user, $db_pass;
+        $dbh = new PDO(self::$DSN, $db_user, $db_pass);
+        $stmt = $dbh->prepare("SELECT * FROM user_order WHERE user_id = :user_id");
+        $stmt->execute([":user_id" => $user_id]);
+        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $dbh->prepare("SELECT * FROM products_order WHERE order_id = :order_id");
+        $stmt = $dbh->prepare("SELECT products_order.*, product.name FROM products_order JOIN product ON products_order.product_id = product.id WHERE order_id = :order_id");
+        foreach ($orders as $key => $order) {
+            $stmt->execute([":order_id" => $order["id"]]);
+            $orders[$key]["products"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $orders;
+
+    }
 }
