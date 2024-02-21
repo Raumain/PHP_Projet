@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require_once __DIR__ . '/../models/Order.php';
 if (!isset($_COOKIE['user'])) {
@@ -6,7 +6,7 @@ if (!isset($_COOKIE['user'])) {
     exit;
 }
 
-$orders = new Order ();
+$orders = new Order();
 $list = $orders->getOrdersAndProductsByUser($_COOKIE['user-id']);
 
 
@@ -28,31 +28,37 @@ $list = $orders->getOrdersAndProductsByUser($_COOKIE['user-id']);
     <?php include __DIR__ . '/../components/header.php'; ?>
     <a href="/"><i class="fa-solid fa-arrow-left"></i>Back to products</a>
     <h1>Orders</h1>
-    <table>
-        <tr>
-            <th>Price</th>
-            <th>Details</th>
-        </tr>
-        <?php foreach ($list as $order) : ?>
+    <?php if (empty($list)) : ?>
+        <p>No orders yet</p>
+    <?php else : ?>
+        <table>
             <tr>
-                <td><?= $order['price'] ?></td>
-                <td> 
-                    <table>
-                        <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                        </tr>
-                        <?php foreach ($order['products'] as $product) : ?>
-                            <tr>
-                                <td><?= $product['name'] ?></td>
-                                <td><?= $product['quantity'] ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </td>
+                <th>Price</th>
+                <th>Details</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
+            <?php foreach ($list as $order) : ?>
+                <tr>
+                    <td><?= $order['price'] ?></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                            </tr>
+                            <?php foreach ($order['products'] as $product) : ?>
+                                <tr>
+                                    <td><?= $product['name'] ?></td>
+                                    <td><?= $product['quantity'] ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+
+
 
 
 </body>
